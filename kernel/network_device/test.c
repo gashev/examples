@@ -4,12 +4,12 @@
 
 #define DRV_NAME	"test"
 #define DRV_VERSION	"0.1"
+
 struct pcpu_dstats {
 	u64			tx_packets;
 	u64			tx_bytes;
 	struct u64_stats_sync	syncp;
 };
-
 
 static int dummy_dev_init(struct net_device *dev)
 {
@@ -41,7 +41,6 @@ static void setup(struct net_device *dev)
 
 	/* Fill in device structure with ethernet-generic values. */
 	dev->flags = IFF_UP | IFF_LOWER_UP | IFF_MULTICAST | IFF_BROADCAST;
-	//dev->flags &= ~IFF_MULTICAST;
 	dev->priv_flags |= IFF_LIVE_ADDR_CHANGE | IFF_NO_QUEUE;
 	dev->features	|= NETIF_F_SG | NETIF_F_FRAGLIST;
 	dev->features	|= NETIF_F_ALL_TSO;
@@ -59,7 +58,6 @@ static void setup(struct net_device *dev)
 static struct rtnl_link_ops link_ops __read_mostly = {
 	.kind		= DRV_NAME,
 	.setup		= setup,
-	//.validate	= dummy_validate,
 };
 
 static int __init init_one(void)
@@ -81,6 +79,7 @@ err:
 	free_netdev(dev_dummy);
 	return err;
 }
+
 static int __init test_init_module(void)
 {
 	printk(KERN_ERR "init_module");
@@ -105,8 +104,6 @@ out:
 	return err;
 }
 
-
-
 static void __exit test_cleanup_module(void)
 {
 	printk(KERN_ERR "cleanup_module");
@@ -115,6 +112,7 @@ static void __exit test_cleanup_module(void)
 
 module_init(test_init_module);
 module_exit(test_cleanup_module);
+
 MODULE_LICENSE("GPL");
 MODULE_ALIAS_RTNL_LINK(DRV_NAME);
 MODULE_VERSION(DRV_VERSION);
