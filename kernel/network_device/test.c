@@ -25,41 +25,10 @@ static void dummy_dev_uninit(struct net_device *dev)
 	free_percpu(dev->dstats);
 }
 
-static int dummy_open(struct net_device *dev)
-{
-    struct net_bridge *br = netdev_priv(dev);
-
-    netdev_update_features(dev);
-    netif_start_queue(dev);
-
-    return 0;
-}
-
-static int dummy_stop(struct net_device *dev)
-{
-    struct net_bridge *br = netdev_priv(dev);
-
-
-    netif_stop_queue(dev);
-
-    return 0;
-}
-
-
 static const struct net_device_ops dummy_netdev_ops = {
-	.ndo_init		= dummy_dev_init,
-	.ndo_uninit		= dummy_dev_uninit,
-	.ndo_open               = dummy_open,
-	.ndo_stop               = dummy_stop
-	/*.ndo_start_xmit		= dummy_xmit,
-	.ndo_validate_addr	= eth_validate_addr,
-	.ndo_set_rx_mode	= set_multicast_list,
-	.ndo_set_mac_address	= eth_mac_addr,
-	.ndo_get_stats64	= dummy_get_stats64,
-	.ndo_change_carrier	= dummy_change_carrier,*/
+	.ndo_init	= dummy_dev_init,
+	.ndo_uninit	= dummy_dev_uninit
 };
-
-
 
 static void setup(struct net_device *dev)
 {
