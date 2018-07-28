@@ -1,7 +1,7 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/sched.h>
-#include <linux/init.h>
+#include <linux/init_task.h>
 
 /**
  * Performs a DFS on a given task's children.
